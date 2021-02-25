@@ -9,7 +9,10 @@ const Profile = () => {
       />
       <div>
         <strong>Felipe Chernicharo</strong>
-        <p>level 1</p>
+        <p>
+          <img src="icons/level.svg" alt="level" />
+          level 1
+        </p>
       </div>
     </div>
   );
