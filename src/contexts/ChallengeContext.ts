@@ -1,3 +1,3 @@
 import { createContext } from 'react';
 
-export const challengeContext = createContext({});
+export const ChallengeContext = createContext({});
