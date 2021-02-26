@@ -3,13 +3,15 @@ import { ChallengeContext } from '../contexts/ChallengeContext';
 import styles from '../styles/components/ChallengeBox.module.css';
 
 export default function ChallengeBox() {
-  const { activeChallenge, resetChallenge } = useContext(ChallengeContext);
+  const { activeChallenge, resetChallenge, completeChallenge } = useContext(
+    ChallengeContext
+  );
 
   return (
     <div className={styles.container}>
       {activeChallenge ? (
         <div className={styles.challengeActive}>
-          <header>Ganhe {activeChallenge.amount}</header>
+          <header>Ganhe {activeChallenge.amount} xp</header>
 
           <main>
             <img src={`icons/${activeChallenge.type}.svg`} alt="" />
@@ -25,7 +27,11 @@ export default function ChallengeBox() {
             >
               Falhei
             </button>
-            <button type="button" className={styles.challengeSuccededBtn}>
+            <button
+              type="button"
+              className={styles.challengeSuccededBtn}
+              onClick={completeChallenge}
+            >
               Completei
             </button>
           </footer>

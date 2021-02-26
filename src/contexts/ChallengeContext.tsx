@@ -6,7 +6,7 @@ interface ChalengeProviderProps {
 }
 
 interface Challenge {
-  type: 'body' | 'eye';
+  type: string;
   description: string;
   amount: number;
 }
@@ -20,6 +20,7 @@ interface ChallengesContextData {
   levelUp: () => void;
   startNewChallenge: () => void;
   resetChallenge: () => void;
+  completeChallenge: () => void;
 }
 
 export const ChallengeContext = createContext({} as ChallengesContextData);
@@ -31,7 +32,7 @@ export function ChallengesProvider({ children }: ChalengeProviderProps) {
   const xpToNextLevel = Math.pow((level + 1) * 4, 2); //
 
   const [challengesCompleted, setChallengesCompleted] = useState(0);
-  const [activeChallenge, setActiveChallenge] = useState(null);
+  const [activeChallenge, setActiveChallenge] = useState<Challenge>(null);
 
   function levelUp() {
     setLevel(level + 1);
@@ -49,6 +50,25 @@ export function ChallengesProvider({ children }: ChalengeProviderProps) {
     setActiveChallenge(null);
   }
 
+  function completeChallenge() {
+    if (!activeChallenge) {
+      return;
+    }
+
+    const { amount } = activeChallenge;
+
+    let finalXp = currentXp + amount;
+
+    if (finalXp >= xpToNextLevel) {
+      finalXp = finalXp - xpToNextLevel;
+      levelUp();
+    }
+
+    setCurrentXp(finalXp);
+    setActiveChallenge(null);
+    setChallengesCompleted(challengesCompleted + 1);
+  }
+
   return (
     <ChallengeContext.Provider
       value={{
@@ -60,6 +80,7 @@ export function ChallengesProvider({ children }: ChalengeProviderProps) {
         levelUp,
         startNewChallenge,
         resetChallenge,
+        completeChallenge,
       }}
     >
       {children}
