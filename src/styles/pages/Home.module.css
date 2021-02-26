@@ -11,7 +11,34 @@
 .container section {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 420px 1fr;
+  grid-gap: 2.25rem;
   gap: 6.25rem;
   align-content: center;
+}
+@media screen and (max-width: 928px) {
+  .container section {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .container {
+    padding: 2rem 1rem;
+  }
+  .container section {
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
+    transform: scale(0.8) translateY(-4rem);
+  }
+  .container section > div {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .container section > div > div.cronometer {
+    margin: 0 2rem;
+  }
 }

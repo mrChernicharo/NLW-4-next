@@ -1,10 +1,4 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { ChallengeContext } from './ChallengeContext';
 
 interface ContextProviderProps {
@@ -26,7 +20,7 @@ let countdownTimeout: NodeJS.Timeout;
 export function CountdownProvider({ children }: ContextProviderProps) {
   const { startNewChallenge } = useContext(ChallengeContext);
   // em Segundos
-  const [time, setTime] = useState(0.05 * 60);
+  const [time, setTime] = useState(25 * 60);
   const [isActive, setIsActive] = useState(false);
   const [hasFinished, setHasFinished] = useState(false);
 
@@ -40,7 +34,7 @@ export function CountdownProvider({ children }: ContextProviderProps) {
   function resetCountdown() {
     clearTimeout(countdownTimeout);
     setIsActive(false);
-    setTime(0.05 * 60);
+    setTime(25 * 60);
     setHasFinished(false);
   }
 

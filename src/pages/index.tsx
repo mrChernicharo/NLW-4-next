@@ -35,7 +35,9 @@ function Home({ level, currentXp, challengesCompleted }: HomeProps) {
             <div>
               <Profile />
               <CompletedChallenges />
-              <Countdown />
+              <div className={styles.cronometer}>
+                <Countdown />
+              </div>
             </div>
             <div>
               <ChallengeBox />
