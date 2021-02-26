@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from 'react';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 import challenges from '../challenges.json';
 
 interface ChalengeProviderProps {
@@ -34,6 +34,10 @@ export function ChallengesProvider({ children }: ChalengeProviderProps) {
   const [challengesCompleted, setChallengesCompleted] = useState(0);
   const [activeChallenge, setActiveChallenge] = useState<Challenge>(null);
 
+  useEffect(() => {
+    Notification.requestPermission();
+  }, []);
+
   function levelUp() {
     setLevel(level + 1);
   }
@@ -44,6 +48,12 @@ export function ChallengesProvider({ children }: ChalengeProviderProps) {
     const challenge = challenges[randomChallengeIndex];
 
     setActiveChallenge(challenge);
+
+    if (Notification.permission === 'granted') {
+      new Notification('Novo desafio 🤠', {
+        body: `Valendo ${challenge.amount}$ xp`,
+      });
+    }
   }
 
   function resetChallenge() {
