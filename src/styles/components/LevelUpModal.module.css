@@ -43,4 +43,6 @@
   top: 0.5rem;
   background: transparent;
   border: 0;
+  /* deixa o outline certinho em volta do ícone X do botão */
+  font-size: 0;
 }
