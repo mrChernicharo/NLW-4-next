@@ -41,6 +41,7 @@ export function CountdownProvider({ children }: ContextProviderProps) {
     clearTimeout(countdownTimeout);
     setIsActive(false);
     setTime(0.05 * 60);
+    setHasFinished(false);
   }
 
   useEffect(() => {
