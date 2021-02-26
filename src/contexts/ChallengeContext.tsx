@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 // simplesmente instale com @types/<lib> -D
 
 import challenges from '../challenges.json';
+import LevelUpModal from '../components/LevelUpModal';
 
 interface ChalengeProviderProps {
   children: ReactNode;
@@ -116,6 +117,8 @@ export function ChallengesProvider({ children, ...rest }: ChalengeProviderProps)
       }}
     >
       {children}
+
+      <LevelUpModal />
     </ChallengeContext.Provider>
   );
 }
