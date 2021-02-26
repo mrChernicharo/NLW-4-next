@@ -1,5 +1,9 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
+// tipagens para libs escritas em JS sem versões estão em
+// https://github.com/DefinitelyTyped/DefinitelyTyped
+// simplesmente instale com @types/<lib> -D
+
 import challenges from '../challenges.json';
 
 interface ChalengeProviderProps {
@@ -39,7 +43,11 @@ export function ChallengesProvider({ children }: ChalengeProviderProps) {
     Notification.requestPermission();
   }, []);
 
-  useEffect(() => {}, [level, currentXp, challengesCompleted]);
+  useEffect(() => {
+    Cookies.set('level', String(level));
+    Cookies.set('currentXp', String(currentXp));
+    Cookies.set('challengesCompleted', String(challengesCompleted));
+  }, [level, currentXp, challengesCompleted]);
 
   function levelUp() {
     setLevel(level + 1);
