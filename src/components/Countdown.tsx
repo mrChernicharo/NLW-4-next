@@ -5,8 +5,9 @@ let countdownTimeout: NodeJS.Timeout;
 
 export default function Countdown() {
   // em Segundos
-  const [time, setTime] = useState(25 * 60);
+  const [time, setTime] = useState(0.05 * 60);
   const [isActive, setIsActive] = useState(false);
+  const [hasFinished, setHasFinished] = useState(false);
 
   const minutes = Math.floor(time / 60);
   const seconds = Math.floor(time % 60);
@@ -21,7 +22,7 @@ export default function Countdown() {
   function resetCountdown() {
     clearTimeout(countdownTimeout);
     setIsActive(false);
-    setTime(25 * 60);
+    setTime(0.05 * 60);
   }
 
   useEffect(() => {
@@ -29,6 +30,9 @@ export default function Countdown() {
       countdownTimeout = setTimeout(() => {
         setTime(time - 1);
       }, 1000);
+    } else if (isActive && time === 0) {
+      setHasFinished(true);
+      setIsActive(false);
     }
   }, [isActive, time]);
 
@@ -46,18 +50,30 @@ export default function Countdown() {
         </div>
       </div>
 
-      {isActive ? (
-        <button
-          type="button"
-          className={`${styles.countdownBtn} ${styles.countdownBtnActive}`}
-          onClick={resetCountdown}
-        >
-          Abandonar ciclo
+      {hasFinished ? (
+        <button disabled type="button" className={styles.countdownBtn}>
+          Ciclo encerrado
         </button>
       ) : (
-        <button type="button" className={styles.countdownBtn} onClick={startCountdown}>
-          Iniciar ciclo
-        </button>
+        <>
+          {isActive ? (
+            <button
+              type="button"
+              className={`${styles.countdownBtn} ${styles.countdownBtnActive}`}
+              onClick={resetCountdown}
+            >
+              Abandonar ciclo
+            </button>
+          ) : (
+            <button
+              type="button"
+              className={styles.countdownBtn}
+              onClick={startCountdown}
+            >
+              Iniciar ciclo
+            </button>
+          )}
+        </>
       )}
     </div>
   );
