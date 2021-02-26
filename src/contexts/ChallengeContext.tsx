@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 import challenges from '../challenges.json';
 
 interface ChalengeProviderProps {
@@ -38,6 +39,8 @@ export function ChallengesProvider({ children }: ChalengeProviderProps) {
     Notification.requestPermission();
   }, []);
 
+  useEffect(() => {}, [level, currentXp, challengesCompleted]);
+
   function levelUp() {
     setLevel(level + 1);
   }
@@ -54,7 +57,6 @@ export function ChallengesProvider({ children }: ChalengeProviderProps) {
     if (Notification.permission === 'granted') {
       new Notification('Novo desafio 🤠', {
         body: `Valendo ${challenge.amount}$ xp`,
-        vibrate: true,
       });
     }
   }
