@@ -2,7 +2,7 @@ import { createContext, useState } from 'react';
 
 export const ChallengeContext = createContext({});
 
-export function ChallengesProvider() {
+export function ChallengesProvider({ children }) {
   const [level, setLevel] = useState(1);
 
   function levelUp() {
@@ -11,7 +11,7 @@ export function ChallengesProvider() {
 
   return (
     <ChallengeContext.Provider value={{ level: 1, levelUp }}>
-      {/* ................. */}
+      {children}
     </ChallengeContext.Provider>
   );
 }
