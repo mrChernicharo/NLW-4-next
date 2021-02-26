@@ -69,7 +69,7 @@
   line-height: 1.5;
 }
 .challengeActive footer {
-  width: 18rem;
+  /* width: 18rem; */
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
