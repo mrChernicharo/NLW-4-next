@@ -9,30 +9,41 @@ import { GetServerSideProps } from 'next';
 import styles from '../styles/pages/Home.module.css';
 import ChallengeBox from '../components/ChallengeBox';
 import { CountdownProvider } from '../contexts/CountdownContext';
-import { useContext } from 'react';
-import { ChallengeContext } from '../contexts/ChallengeContext';
-function Home(props) {
-  console.log(props);
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Início | Move It</title>
-      </Head>
-      <ExperienceBar />
+import { ChallengesProvider } from '../contexts/ChallengeContext';
 
-      <CountdownProvider>
-        <section>
-          <div>
-            <Profile />
-            <CompletedChallenges />
-            <Countdown />
-          </div>
-          <div>
-            <ChallengeBox />
-          </div>
-        </section>
-      </CountdownProvider>
-    </div>
+interface HomeProps {
+  level: number;
+  currentXp: number;
+  challengesCompleted: number;
+}
+
+function Home({ level, currentXp, challengesCompleted }: HomeProps) {
+  return (
+    <ChallengesProvider
+      level={level}
+      currentXp={currentXp}
+      challengesCompleted={challengesCompleted}
+    >
+      <div className={styles.container}>
+        <Head>
+          <title>Início | Move It</title>
+        </Head>
+        <ExperienceBar />
+
+        <CountdownProvider>
+          <section>
+            <div>
+              <Profile />
+              <CompletedChallenges />
+              <Countdown />
+            </div>
+            <div>
+              <ChallengeBox />
+            </div>
+          </section>
+        </CountdownProvider>
+      </div>
+    </ChallengesProvider>
   );
 }
 
@@ -49,9 +60,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   // e passamos via props, pro componente Home consumir
   return {
     props: {
-      level,
-      currentXp,
-      challengesCompleted,
+      level: Number(level),
+      currentXp: Number(currentXp),
+      challengesCompleted: Number(challengesCompleted),
     },
   };
 };

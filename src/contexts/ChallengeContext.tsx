@@ -8,6 +8,9 @@ import challenges from '../challenges.json';
 
 interface ChalengeProviderProps {
   children: ReactNode;
+  level: number;
+  currentXp: number;
+  challengesCompleted: number;
 }
 
 interface Challenge {
@@ -30,13 +33,19 @@ interface ChallengesContextData {
 
 export const ChallengeContext = createContext({} as ChallengesContextData);
 
-export function ChallengesProvider({ children }: ChalengeProviderProps) {
-  const [level, setLevel] = useState(1);
+// desestruturar as props assim daria erro por duplicação de nomes:
+// export function ChallengesProvider({ children, level, currentXp, challengesCompleted })
+// a solução é usar o spread operator ...rest
 
-  const [currentXp, setCurrentXp] = useState(0);
+export function ChallengesProvider({ children, ...rest }: ChalengeProviderProps) {
+  const [level, setLevel] = useState(rest.level ?? 1);
+
+  const [currentXp, setCurrentXp] = useState(rest.currentXp ?? 0);
   const xpToNextLevel = Math.pow((level + 1) * 4, 2); //
 
-  const [challengesCompleted, setChallengesCompleted] = useState(0);
+  const [challengesCompleted, setChallengesCompleted] = useState(
+    rest.challengesCompleted ?? 0
+  );
   const [activeChallenge, setActiveChallenge] = useState<Challenge>(null);
 
   useEffect(() => {
