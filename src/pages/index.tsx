@@ -59,12 +59,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   // aqui extraímos os dados outrora gravados nos cookies
   const { level, currentXp, challengesCompleted } = ctx.req.cookies;
 
+  console.log(ctx);
+
   // e passamos via props, pro componente Home consumir
   return {
     props: {
-      level: Number(level),
-      currentXp: Number(currentXp),
-      challengesCompleted: Number(challengesCompleted),
+      level: level ? Number(level) : 1,
+      currentXp: currentXp ? Number(currentXp) : 0,
+      challengesCompleted: challengesCompleted ? Number(challengesCompleted) : 0,
     },
   };
 };

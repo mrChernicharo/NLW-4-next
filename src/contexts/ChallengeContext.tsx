@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
+import os from 'os';
 import Cookies from 'js-cookie';
 // tipagens para libs escritas em JS sem versões estão em
 // https://github.com/DefinitelyTyped/DefinitelyTyped
@@ -53,7 +54,10 @@ export function ChallengesProvider({ children, ...rest }: ChalengeProviderProps)
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
 
   useEffect(() => {
-    Notification.requestPermission();
+    if (Notification.toString().length) {
+      Notification?.requestPermission();
+      // console.log(os.platform());
+    }
   }, []);
 
   useEffect(() => {
@@ -80,7 +84,7 @@ export function ChallengesProvider({ children, ...rest }: ChalengeProviderProps)
 
     new Audio('/notification.mp3').play();
 
-    if (Notification.permission === 'granted') {
+    if (Notification?.permission === 'granted' && os?.platform() !== 'android') {
       new Notification('Novo desafio 🤠', {
         body: `Valendo ${challenge.amount}$ xp`,
       });
